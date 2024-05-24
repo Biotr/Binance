@@ -4,10 +4,10 @@ from websockets.server import serve
 from binance.client import AsyncClient
 from openai import OpenAI
 
-client_ai=OpenAI(api_key="sk-proj-F4sO9hSPRibjd3Lw0Te8T3BlbkFJL5iCRUW3fIzhu8Tg072o")
+client_ai=OpenAI(api_key=config.OPEN_AI_API_KEY)
 
 async def echo(websocket):
-    client_binance=await AsyncClient.create('811b4221aa7663cce851aac489a91cb5c60db42bf4f54a0f6d3e79a8d21b6f56','db66d5603899f15206896b2d1d99fb97f3a1c0c0fc6731d38fad917d2af6d84d',testnet=True)
+    client_binance=await AsyncClient.create(config.BINANCE_API_KEY,config.BINANCE_API_SECRET,testnet=True)
     async for message in websocket:
         data=json.loads(message)
         completion=client_ai.chat.completions.create(
